@@ -1,0 +1,6 @@
+@NexFlow.Knowledge.Api_HostAddress = http://localhost:5183
+
+GET {{NexFlow.Knowledge.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

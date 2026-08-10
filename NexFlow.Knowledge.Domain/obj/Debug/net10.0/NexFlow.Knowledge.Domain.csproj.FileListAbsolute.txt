@@ -1,0 +1,12 @@
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\bin\Debug\net10.0\NexFlow.Knowledge.Domain.deps.json
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\bin\Debug\net10.0\NexFlow.Knowledge.Domain.dll
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\bin\Debug\net10.0\NexFlow.Knowledge.Domain.pdb
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\NexFlow.Knowledge.Domain.csproj.AssemblyReference.cache
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\NexFlow.Knowledge.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\NexFlow.Knowledge.Domain.AssemblyInfoInputs.cache
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\NexFlow.Knowledge.Domain.AssemblyInfo.cs
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\NexFlow.Knowledge.Domain.csproj.CoreCompileInputs.cache
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\NexFlow.Knowledge.Domain.dll
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\refint\NexFlow.Knowledge.Domain.dll
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\NexFlow.Knowledge.Domain.pdb
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\ref\NexFlow.Knowledge.Domain.dll
