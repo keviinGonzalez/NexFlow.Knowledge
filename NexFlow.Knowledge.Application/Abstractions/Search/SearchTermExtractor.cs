@@ -41,13 +41,20 @@ namespace NexFlow.Knowledge.Application.Abstractions.Search
             if (string.IsNullOrWhiteSpace(question))
                 return [];
 
-            return question
+            var words = question
                 .Split(
                     [' ', ',', '.', ';', ':', '?', '¿', '!', '¡'],
                     StringSplitOptions.RemoveEmptyEntries)
                 .Select(x => x.Trim())
                 .Where(x => x.Length >= 3)
                 .Where(x => !StopWords.Contains(x))
+                .ToList();
+
+            var phrases = words
+                .Zip(words.Skip(1), (first, second) => $"{first} {second}");
+
+            return words
+                .Concat(phrases)
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList();
         }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NexFlow.Knowledge.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85a940c8004692b39dfc7f801dd8b241e31898fa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+261ff89153957c6b5526ae15b684495bbbb138cb")]
 [assembly: System.Reflection.AssemblyProductAttribute("NexFlow.Knowledge.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NexFlow.Knowledge.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

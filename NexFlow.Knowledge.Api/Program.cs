@@ -32,7 +32,8 @@ namespace NexFlow.Knowledge.Api
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            // Temporary local test bypass: this environment has no HTTPS development certificate.
+            // app.UseHttpsRedirection();
 
             app.UseAuthorization();
 

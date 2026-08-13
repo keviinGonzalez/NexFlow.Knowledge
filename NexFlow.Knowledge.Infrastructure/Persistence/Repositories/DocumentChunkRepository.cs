@@ -45,7 +45,7 @@ namespace NexFlow.Knowledge.Infrastructure.Persistence.Repositories
             return results.Select(x => new SimilarChunkResult(x.Chunk, 1 - x.Distance)).ToList();
         }
 
-        public async Task<IReadOnlyList<DocumentChunk>> SearchTextAsync(IReadOnlyList<string> searchTerms, int limit, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<TextSearchResult>> SearchTextAsync(IReadOnlyList<string> searchTerms, int limit, CancellationToken cancellationToken = default)
         {
             if (searchTerms is null || searchTerms.Count == 0)
                 return [];
@@ -64,14 +64,52 @@ namespace NexFlow.Knowledge.Infrastructure.Persistence.Repositories
             if (terms.Count == 0)
                 return [];
 
-            var query = _context.DocumentChunks
-                .Where(chunk =>
-                    terms.Any(term => chunk.Content.Contains(term)));
+            var patterns = terms
+                .Select(term => $"%{term}%")
+                .ToList();
 
-            return await query
-                .OrderBy(x => x.ChunkIndex)
-                .Take(limit)
+            var matchingChunks = await _context.DocumentChunks
+                .Where(chunk =>
+                    patterns.Any(pattern => EF.Functions.ILike(chunk.Content, pattern)))
                 .ToListAsync(cancellationToken);
+
+            return matchingChunks
+                .Select(chunk => new TextSearchResult(
+                    chunk,
+                    CalculateTextScore(chunk.Content, terms)))
+                .Where(x => x.TextScore > 0)
+                .OrderByDescending(x => x.TextScore)
+                .ThenBy(x => x.Chunk.DocumentId)
+                .ThenBy(x => x.Chunk.ChunkIndex)
+                .Take(limit)
+                .ToList();
+        }
+
+        private static double CalculateTextScore(
+            string content,
+            IReadOnlyList<string> terms)
+        {
+            if (string.IsNullOrWhiteSpace(content) || terms.Count == 0)
+                return 0;
+
+            var normalizedContent = content.ToUpperInvariant();
+            var totalWeight = terms.Sum(GetTermWeight);
+
+            if (totalWeight == 0)
+                return 0;
+
+            var matchedWeight = terms
+                .Where(term => normalizedContent.Contains(
+                    term.ToUpperInvariant(),
+                    StringComparison.Ordinal))
+                .Sum(GetTermWeight);
+
+            return (double)matchedWeight / totalWeight;
+        }
+
+        private static int GetTermWeight(string term)
+        {
+            return term.Contains(' ') ? 2 : 1;
         }
 
         public async Task<IReadOnlyList<DocumentChunk>> GetContextAsync(Guid documentId, int chunkIndex, int radius, CancellationToken cancellationToken = default)

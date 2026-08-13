@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NexFlow.Knowledge.Application.Abstractions.Chunking;
 using NexFlow.Knowledge.Application.Abstractions.Search;
 using NexFlow.Knowledge.Application.Behaviors;
+using NexFlow.Knowledge.Application.Services.Search;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,6 +25,7 @@ namespace NexFlow.Knowledge.Application.DependencyInjection
 
             services.AddScoped<ISearchTermExtractor, SearchTermExtractor>();
             services.AddScoped<ISearchResultScorer, SearchResultScorer>();
+            services.AddScoped<IHybridKnowledgeRetriever, HybridKnowledgeRetriever>();
 
             return services;
         }
