@@ -64,6 +64,7 @@ namespace NexFlow.Knowledge.Infrastructure.DependencyInjection
             services.AddScoped<ITextChunker, TextChunker>();
             services.AddScoped<ITextNormalizer, TextNormalizer>();
             services.AddScoped<IChunkContextExpander, ChunkContextExpander>();
+            services.AddScoped<IChunkReranker, ChunkReranker>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

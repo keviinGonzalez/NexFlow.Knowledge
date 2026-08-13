@@ -10,3 +10,4 @@ D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\NexFlo
 D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\refint\NexFlow.Knowledge.Domain.dll
 D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\NexFlow.Knowledge.Domain.pdb
 D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\ref\NexFlow.Knowledge.Domain.dll
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Domain\obj\Debug\net10.0\NexFlow.Knowledge.Domain.sourcelink.json

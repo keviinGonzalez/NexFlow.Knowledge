@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using NexFlow.Knowledge.Application.Abstractions.Chunking;
+using NexFlow.Knowledge.Application.Abstractions.Search;
 using NexFlow.Knowledge.Application.Behaviors;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,9 @@ namespace NexFlow.Knowledge.Application.DependencyInjection
             });
 
             services.AddValidatorsFromAssembly(typeof(AssemblyReference).Assembly);
+
+            services.AddScoped<ISearchTermExtractor, SearchTermExtractor>();
+            services.AddScoped<ISearchResultScorer, SearchResultScorer>();
 
             return services;
         }

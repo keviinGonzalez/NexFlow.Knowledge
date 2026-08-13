@@ -45,21 +45,94 @@ namespace NexFlow.Knowledge.Infrastructure.Persistence.Repositories
             return results.Select(x => new SimilarChunkResult(x.Chunk, 1 - x.Distance)).ToList();
         }
 
-        public async Task<IReadOnlyList<DocumentChunk>> SearchTextAsync(string searchText, int limit, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<DocumentChunk>> SearchTextAsync(IReadOnlyList<string> searchTerms, int limit, CancellationToken cancellationToken = default)
+        {
+            if (searchTerms is null || searchTerms.Count == 0)
+                return [];
+
+            if (limit <= 0)
+                throw new ArgumentOutOfRangeException(
+                    nameof(limit),
+                    "El límite debe ser mayor que cero.");
+
+            var terms = searchTerms
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Select(x => x.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            if (terms.Count == 0)
+                return [];
+
+            var query = _context.DocumentChunks
+                .Where(chunk =>
+                    terms.Any(term => chunk.Content.Contains(term)));
+
+            return await query
+                .OrderBy(x => x.ChunkIndex)
+                .Take(limit)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<IReadOnlyList<DocumentChunk>> GetContextAsync(Guid documentId, int chunkIndex, int radius, CancellationToken cancellationToken = default)
+        {
+            if (radius < 0)
+            { throw new ArgumentOutOfRangeException(nameof(radius), "El radio no puede ser negativo."); }
+            if (chunkIndex < 0) { throw new ArgumentOutOfRangeException(nameof(chunkIndex), "El índice del chunk no puede ser negativo."); }
+            var startIndex = Math.Max(0, chunkIndex - radius); var endIndex = chunkIndex + radius;
+            return await _context.DocumentChunks
+                .Where(x => x.DocumentId == documentId &&
+                    x.ChunkIndex >= startIndex && x.ChunkIndex <= endIndex)
+                .OrderBy(x => x.ChunkIndex)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<IReadOnlyList<DocumentChunk>> SearchHybridAsync(
+    string searchText,
+    Vector embedding,
+    int limit,
+    CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(searchText))
                 return [];
 
             if (limit <= 0)
-                throw new ArgumentOutOfRangeException(nameof(limit), "El límite debe ser mayor que cero.");
+                throw new ArgumentOutOfRangeException(
+                    nameof(limit),
+                    "El límite debe ser mayor que cero.");
+
+            var semanticResults = await _context.DocumentChunks
+                .Where(x => x.Embedding != null)
+                .Select(x => new
+                {
+                    Chunk = x,
+                    Distance = x.Embedding!.CosineDistance(embedding)
+                })
+                .OrderBy(x => x.Distance)
+                .Take(limit)
+                .ToListAsync(cancellationToken);
 
             var normalizedSearchText = searchText.Trim();
 
-            return await _context.DocumentChunks
+            var textResults = await _context.DocumentChunks
                 .Where(x => x.Content.Contains(normalizedSearchText))
-                .OrderBy(x => x.ChunkIndex)
                 .Take(limit)
                 .ToListAsync(cancellationToken);
+
+
+            var results = semanticResults
+                .Select(x => x.Chunk)
+                .Concat(textResults)
+                .GroupBy(x => new
+                {
+                    x.DocumentId,
+                    x.ChunkIndex
+                })
+                .Select(x => x.First())
+                .Take(limit)
+                .ToList();
+
+            return results;
         }
     }
 }

@@ -13,3 +13,4 @@ D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Application\obj\Debug\net10.0\N
 D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Application\obj\Debug\net10.0\refint\NexFlow.Knowledge.Application.dll
 D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Application\obj\Debug\net10.0\NexFlow.Knowledge.Application.pdb
 D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Application\obj\Debug\net10.0\ref\NexFlow.Knowledge.Application.dll
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Application\obj\Debug\net10.0\NexFlow.Knowledge.Application.sourcelink.json

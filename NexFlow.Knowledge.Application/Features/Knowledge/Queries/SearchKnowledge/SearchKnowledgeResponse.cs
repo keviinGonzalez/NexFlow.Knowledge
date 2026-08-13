@@ -5,5 +5,5 @@ using System.Text;
 namespace NexFlow.Knowledge.Application.Features.Knowledge.Queries.SearchKnowledge
 {
     public sealed record SearchKnowledgeResponse(string Question, IReadOnlyList<SearchKnowledgeResult> Results);
-    public sealed record SearchKnowledgeResult(Guid DocumentId, int ChunkIndex, string Content, double similarity);
+    public sealed record SearchKnowledgeResult(Guid DocumentId, int ChunkIndex, string Content, double Similarity);
 }

@@ -18,3 +18,4 @@ D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Infrastructure\obj\Debug\net10.
 D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Infrastructure\obj\Debug\net10.0\NexFlow.Knowledge.Infrastructure.pdb
 D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Infrastructure\obj\Debug\net10.0\NexFlow.Knowledge.Infrastructure.genruntimeconfig.cache
 D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Infrastructure\obj\Debug\net10.0\ref\NexFlow.Knowledge.Infrastructure.dll
+D:\Proyectos\NexFlow.Knowledge\NexFlow.Knowledge.Infrastructure\obj\Debug\net10.0\NexFlow.Knowledge.Infrastructure.sourcelink.json
