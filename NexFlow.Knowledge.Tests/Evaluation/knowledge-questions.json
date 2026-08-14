@@ -1,0 +1,22 @@
+﻿[
+  {
+    "question": "¿Cuántos caracteres debe tener como mínimo una contraseña?",
+    "expectedChunkIndex": 6
+  },
+  {
+    "question": "¿Después de cuántos intentos fallidos se bloquea una cuenta?",
+    "expectedChunkIndex": 6
+  },
+  {
+    "question": "¿Cuánto dura el bloqueo de una cuenta?",
+    "expectedChunkIndex": 6
+  },
+  {
+    "question": "¿Cada cuánto deben cambiarse las contraseñas?",
+    "expectedChunkIndex": 6
+  },
+  {
+    "question": "¿Cuántas contraseñas anteriores no pueden reutilizarse?",
+    "expectedChunkIndex": 6
+  }
+]

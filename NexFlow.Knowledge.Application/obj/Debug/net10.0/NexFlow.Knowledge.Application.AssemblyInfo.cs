@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NexFlow.Knowledge.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+261ff89153957c6b5526ae15b684495bbbb138cb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c82bbf5e7ad54694e6527f3286913e4235023c6")]
 [assembly: System.Reflection.AssemblyProductAttribute("NexFlow.Knowledge.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NexFlow.Knowledge.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

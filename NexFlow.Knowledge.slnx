@@ -7,4 +7,5 @@
   <Project Path="NexFlow.Knowledge.Application/NexFlow.Knowledge.Application.csproj" />
   <Project Path="NexFlow.Knowledge.Domain/NexFlow.Knowledge.Domain.csproj" />
   <Project Path="NexFlow.Knowledge.Infrastructure/NexFlow.Knowledge.Infrastructure.csproj" />
+  <Project Path="NexFlow.Knowledge.Tests/NexFlow.Knowledge.Tests.csproj" Id="22b1a254-810d-476f-8a2f-c3e669c0961c" />
 </Solution>
