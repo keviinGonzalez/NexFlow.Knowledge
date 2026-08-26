@@ -26,17 +26,19 @@ namespace NexFlow.Knowledge.Infrastructure.Persistence.Repositories
             await _context.AddRangeAsync(chunks, cancellationToken);
         }
 
-        public async Task<IReadOnlyList<SimilarChunkResult>> SearchSimilarAsync(Vector embedding, int limit, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<SimilarChunkResult>> SearchSimilarAsync(float[] embedding, int limit, CancellationToken cancellationToken = default)
         {
             if (limit <= 0)
                 throw new ArgumentOutOfRangeException(nameof(limit), "El límite debe ser mayor que cero.");
+
+            var pgVector = new Vector(embedding);
 
             var results = await _context.DocumentChunks
                 .Where(x => x.Embedding != null)
                .Select(x => new
                {
                    Chunk = x,
-                   Distance = x.Embedding!.CosineDistance(embedding)
+                   Distance = x.Embedding!.CosineDistance(pgVector)
                })
                .OrderBy(x => x.Distance)
                .Take(limit)
@@ -125,11 +127,7 @@ namespace NexFlow.Knowledge.Infrastructure.Persistence.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<IReadOnlyList<DocumentChunk>> SearchHybridAsync(
-    string searchText,
-    Vector embedding,
-    int limit,
-    CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<DocumentChunk>> SearchHybridAsync(string searchText, float[] embedding, int limit, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(searchText))
                 return [];

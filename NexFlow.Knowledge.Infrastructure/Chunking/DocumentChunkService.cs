@@ -25,10 +25,10 @@ namespace NexFlow.Knowledge.Infrastructure.Chunking
 
             for (var i = 0; i < textChunks.Count; i++)
             {
-                var chunk = DocumentChunk.Create(document.Id, textChunks[i], i);
-                var embedding = await _embeddingGenerator.GenerateAsync(textChunks[i], cancellationToken);
+                var chunk = document.AddChunk(textChunks[i], i);
+                var embeddingMemory = await _embeddingGenerator.GenerateAsync(textChunks[i], cancellationToken);
 
-                chunk.SetEmbedding(embedding);
+                chunk.SetEmbedding(embeddingMemory.ToArray());
                 documentChunks.Add(chunk);
             }
 

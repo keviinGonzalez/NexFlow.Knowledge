@@ -142,32 +142,7 @@
           }
         }
       },
-      "Npgsql/8.0.5": {
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.0"
-        },
-        "runtime": {
-          "lib/net8.0/Npgsql.dll": {
-            "assemblyVersion": "8.0.5.0",
-            "fileVersion": "8.0.5.0"
-          }
-        }
-      },
-      "Pgvector/0.3.2": {
-        "dependencies": {
-          "Npgsql": "8.0.5"
-        },
-        "runtime": {
-          "lib/net6.0/Pgvector.dll": {
-            "assemblyVersion": "0.3.2.0",
-            "fileVersion": "0.3.2.0"
-          }
-        }
-      },
       "NexFlow.Knowledge.Domain/1.0.0": {
-        "dependencies": {
-          "Pgvector": "0.3.2"
-        },
         "runtime": {
           "NexFlow.Knowledge.Domain.dll": {
             "assemblyVersion": "1.0.0.0",
@@ -266,20 +241,6 @@
       "sha512": "sha512-lKIZiBiGd36k02TCdMHp1KlNWisyIvQxcYJvIkz7P4gSQ9zi8dgh6S5Grj8NNG7HWYIPfQymGyoZ6JB5d1Lo1g==",
       "path": "microsoft.identitymodel.tokens/8.14.0",
       "hashPath": "microsoft.identitymodel.tokens.8.14.0.nupkg.sha512"
-    },
-    "Npgsql/8.0.5": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-zRG5V8cyeZLpzJlKzFKjEwkRMYIYnHWJvEor2lWXeccS2E1G2nIWYYhnukB51iz5XsWSVEtqg3AxTWM0QJ6vfg==",
-      "path": "npgsql/8.0.5",
-      "hashPath": "npgsql.8.0.5.nupkg.sha512"
-    },
-    "Pgvector/0.3.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-n7M5LuNejHUmtWky3zCbNO+tP1Gnjiuv9Qtu4LyvB1602dD8RiBxxCQp9jEjM0ZFDxAZF1oOWkNIkXw46KT00Q==",
-      "path": "pgvector/0.3.2",
-      "hashPath": "pgvector.0.3.2.nupkg.sha512"
     },
     "NexFlow.Knowledge.Domain/1.0.0": {
       "type": "project",

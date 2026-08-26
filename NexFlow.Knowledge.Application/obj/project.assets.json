@@ -197,40 +197,9 @@
           }
         }
       },
-      "Npgsql/8.0.5": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.0"
-        },
-        "compile": {
-          "lib/net8.0/Npgsql.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/Npgsql.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "Pgvector/0.3.2": {
-        "type": "package",
-        "dependencies": {
-          "Npgsql": "8.0.5"
-        },
-        "compile": {
-          "lib/net6.0/Pgvector.dll": {}
-        },
-        "runtime": {
-          "lib/net6.0/Pgvector.dll": {}
-        }
-      },
       "NexFlow.Knowledge.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
-        "dependencies": {
-          "Pgvector": "0.3.2"
-        },
         "compile": {
           "bin/placeholder/NexFlow.Knowledge.Domain.dll": {}
         },
@@ -583,46 +552,6 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
-    "Npgsql/8.0.5": {
-      "sha512": "zRG5V8cyeZLpzJlKzFKjEwkRMYIYnHWJvEor2lWXeccS2E1G2nIWYYhnukB51iz5XsWSVEtqg3AxTWM0QJ6vfg==",
-      "type": "package",
-      "path": "npgsql/8.0.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "lib/net6.0/Npgsql.dll",
-        "lib/net6.0/Npgsql.xml",
-        "lib/net7.0/Npgsql.dll",
-        "lib/net7.0/Npgsql.xml",
-        "lib/net8.0/Npgsql.dll",
-        "lib/net8.0/Npgsql.xml",
-        "lib/netstandard2.0/Npgsql.dll",
-        "lib/netstandard2.0/Npgsql.xml",
-        "lib/netstandard2.1/Npgsql.dll",
-        "lib/netstandard2.1/Npgsql.xml",
-        "npgsql.8.0.5.nupkg.sha512",
-        "npgsql.nuspec",
-        "postgresql.png"
-      ]
-    },
-    "Pgvector/0.3.2": {
-      "sha512": "n7M5LuNejHUmtWky3zCbNO+tP1Gnjiuv9Qtu4LyvB1602dD8RiBxxCQp9jEjM0ZFDxAZF1oOWkNIkXw46KT00Q==",
-      "type": "package",
-      "path": "pgvector/0.3.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.txt",
-        "README.md",
-        "icon.png",
-        "lib/net462/Pgvector.dll",
-        "lib/net6.0/Pgvector.dll",
-        "lib/netstandard2.0/Pgvector.dll",
-        "pgvector.0.3.2.nupkg.sha512",
-        "pgvector.nuspec"
-      ]
-    },
     "NexFlow.Knowledge.Domain/1.0.0": {
       "type": "project",
       "path": "../NexFlow.Knowledge.Domain/NexFlow.Knowledge.Domain.csproj",
@@ -688,7 +617,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.300"
+      "SdkAnalysisLevel": "10.0.400"
     },
     "frameworks": {
       "net10.0": {
@@ -732,7 +661,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

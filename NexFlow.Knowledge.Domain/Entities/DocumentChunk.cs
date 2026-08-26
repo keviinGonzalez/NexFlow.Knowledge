@@ -1,7 +1,6 @@
 ﻿using NexFlow.Knowledge.Domain.Base;
 using NexFlow.Knowledge.Domain.Exceptions;
 using NexFlow.Knowledge.Domain.Guards;
-using Pgvector;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +14,7 @@ namespace NexFlow.Knowledge.Domain.Entities
         public string Content { get; private set; }
         public int ChunkIndex { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public Vector? Embedding { get; private set; }
+        public float[]? Embedding { get; private set; }
 
 
         public Document Document { get; private set; } = null!;
@@ -38,15 +37,19 @@ namespace NexFlow.Knowledge.Domain.Entities
             CreatedAt = DateTime.UtcNow;
         }
 
-        public static DocumentChunk Create(Guid documentId, string content, int chunkIndex)
-        {
-            return new DocumentChunk(documentId, content, chunkIndex);
-        }
+        //public static DocumentChunk Create(Guid documentId, string content, int chunkIndex)
+        //{
+        //    return new DocumentChunk(documentId, content, chunkIndex);
+        //}
 
-        public void SetEmbedding(Vector embedding)
+        public void SetEmbedding(float[] embedding)
         {
             Guard.ValidateRequired(embedding, nameof(embedding));
 
+            if (embedding.Length == 0)
+            {
+                throw new DomainException("El embedding no puede estar vacío.");
+            }
             Embedding = embedding;
         }
     }

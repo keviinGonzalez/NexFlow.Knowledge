@@ -27,7 +27,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
                 "El sistema no permite reutilizar las últimas cinco contraseñas utilizadas por el usuario.",
                 6);
 
-            var embedding = new Vector(new float[] { 0.1f, 0.2f, 0.3f });
+            float[] embedding = [0.1f, 0.2f, 0.3f];
 
             var embeddingGenerator = new Mock<IEmbeddingGenerator>();
             var repository = new Mock<IDocumentChunkRepository>();
@@ -38,7 +38,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
                 .Setup(x => x.GenerateAsync(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(embedding);
+                .ReturnsAsync(new ReadOnlyMemory<float>(embedding));
 
             termExtractor
                 .Setup(x => x.Extract(It.IsAny<string>()))
@@ -50,7 +50,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
 
             repository
                 .Setup(x => x.SearchSimilarAsync(
-                    It.IsAny<Vector>(),
+                    It.IsAny<float[]>(),
                     10,
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(
@@ -119,7 +119,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
                 "Contenido del segundo fragmento.",
                 2);
 
-            var embedding = new Vector(new float[] { 0.1f, 0.2f, 0.3f });
+            float[] embedding = [0.1f, 0.2f, 0.3f];
 
             var embeddingGenerator = new Mock<IEmbeddingGenerator>();
             var repository = new Mock<IDocumentChunkRepository>();
@@ -130,7 +130,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
                 .Setup(x => x.GenerateAsync(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(embedding);
+                .ReturnsAsync(new ReadOnlyMemory<float>(embedding));
 
             termExtractor
                 .Setup(x => x.Extract(It.IsAny<string>()))
@@ -138,7 +138,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
 
             repository
                 .Setup(x => x.SearchSimilarAsync(
-                    It.IsAny<Vector>(),
+                    It.IsAny<float[]>(),
                     10,
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(
@@ -209,7 +209,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
                 "Contenido tres.",
                 3);
 
-            var embedding = new Vector(new float[] { 0.1f, 0.2f, 0.3f });
+            float[] embedding = [0.1f, 0.2f, 0.3f];
 
             var embeddingGenerator = new Mock<IEmbeddingGenerator>();
             var repository = new Mock<IDocumentChunkRepository>();
@@ -220,7 +220,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
                 .Setup(x => x.GenerateAsync(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(embedding);
+                .ReturnsAsync(new ReadOnlyMemory<float>(embedding));
 
             termExtractor
                 .Setup(x => x.Extract(It.IsAny<string>()))
@@ -228,7 +228,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
 
             repository
                 .Setup(x => x.SearchSimilarAsync(
-                    It.IsAny<Vector>(),
+                    It.IsAny<float[]>(),
                     10,
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(
@@ -284,7 +284,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
                 "Encontrado mediante búsqueda textual.",
                 2);
 
-            var embedding = new Vector(new float[] { 0.1f, 0.2f, 0.3f });
+            float[] embedding = [0.1f, 0.2f, 0.3f];
 
             var embeddingGenerator = new Mock<IEmbeddingGenerator>();
             var repository = new Mock<IDocumentChunkRepository>();
@@ -295,7 +295,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
                 .Setup(x => x.GenerateAsync(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(embedding);
+                .ReturnsAsync(new ReadOnlyMemory<float>(embedding));
 
             termExtractor
                 .Setup(x => x.Extract(It.IsAny<string>()))
@@ -303,7 +303,7 @@ namespace NexFlow.Knowledge.Tests.Evaluation
 
             repository
                 .Setup(x => x.SearchSimilarAsync(
-                    It.IsAny<Vector>(),
+                    It.IsAny<float[]>(),
                     10,
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(

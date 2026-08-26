@@ -24,31 +24,19 @@ namespace NexFlow.Knowledge.Application.Services.Search
             _searchResultScorer = searchResultScorer;
         }
 
-        public async Task<IReadOnlyList<HybridSearchResult>> RetrieveAsync(
-            string question,
-            int sourceLimit,
-            int resultLimit,
-            CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<HybridSearchResult>> RetrieveAsync(string question, int sourceLimit, int resultLimit, CancellationToken cancellationToken = default)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(question);
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(sourceLimit);
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(resultLimit);
 
-            var embedding = await _embeddingGenerator.GenerateAsync(
-                question,
-                cancellationToken);
+            var embedding = await _embeddingGenerator.GenerateAsync(question, cancellationToken);
 
-            var semanticResults = await _documentChunkRepository.SearchSimilarAsync(
-                embedding,
-                sourceLimit,
-                cancellationToken);
+            var semanticResults = await _documentChunkRepository.SearchSimilarAsync(embedding.ToArray(), sourceLimit, cancellationToken);
 
             var searchTerms = _searchTermExtractor.Extract(question);
 
-            var textResults = await _documentChunkRepository.SearchTextAsync(
-                searchTerms,
-                sourceLimit,
-                cancellationToken);
+            var textResults = await _documentChunkRepository.SearchTextAsync(searchTerms, sourceLimit, cancellationToken);
 
             var candidates = new Dictionary<(Guid DocumentId, int ChunkIndex), SearchCandidate>();
 

@@ -835,9 +835,6 @@
         }
       },
       "NexFlow.Knowledge.Domain/1.0.0": {
-        "dependencies": {
-          "Pgvector": "0.3.2"
-        },
         "runtime": {
           "NexFlow.Knowledge.Domain.dll": {
             "assemblyVersion": "1.0.0.0",

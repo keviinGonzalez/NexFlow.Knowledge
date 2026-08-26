@@ -20,7 +20,7 @@ namespace NexFlow.Knowledge.Infrastructure.AI.Ollama
             _options = options.Value;
         }
 
-        public async Task<Vector> GenerateAsync(string text, CancellationToken cancellationToken = default)
+        public async Task<ReadOnlyMemory<float>> GenerateAsync(string text, CancellationToken cancellationToken = default)
         {
             ArgumentException.ThrowIfNullOrEmpty(text, nameof(text));
 
@@ -37,7 +37,7 @@ namespace NexFlow.Knowledge.Infrastructure.AI.Ollama
             if (result?.Embeddings is null || result.Embeddings.Count == 0)
                 throw new InvalidOperationException("Ollama no devolvió ningún embedding.");
 
-            return new Vector(result.Embeddings[0]);
+            return new ReadOnlyMemory<float>(result.Embeddings[0]);
         }
 
         private sealed class OllamaEmbeddingResponse

@@ -16,12 +16,18 @@ namespace NexFlow.Knowledge.Domain.Entities
         public long FileSize { get; private set; }
         public string? ExtractedText { get; private set; }
         public DateTime UploadedAt { get; private set; }
+
+
+        private readonly List<DocumentChunk> _chunks = new();
+        public IReadOnlyCollection<DocumentChunk> Chunks => _chunks.AsReadOnly();
+
+
         private Document()
         {
         }
 
         public static Document Create(string originalFileName, string storedFileName, string storagePath, string contentType,
-    long fileSize, string? extractedText = null)
+            long fileSize, string? extractedText = null)
         {
             var document = new Document();
 
@@ -35,6 +41,15 @@ namespace NexFlow.Knowledge.Domain.Entities
             document.UploadedAt = DateTime.UtcNow;
 
             return document;
+        }
+
+        public DocumentChunk AddChunk(string content, int chunkIndex)
+        {
+            // Pasa automáticamente el Id de este documento (this.Id)
+            var chunk = new DocumentChunk(this.Id, content, chunkIndex);
+            _chunks.Add(chunk);
+
+            return chunk;
         }
 
         public void ChangeOriginalFileName(string originalFileName)
