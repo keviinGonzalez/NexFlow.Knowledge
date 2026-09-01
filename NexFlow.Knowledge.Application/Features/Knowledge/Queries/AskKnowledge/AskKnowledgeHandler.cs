@@ -48,18 +48,20 @@ namespace NexFlow.Knowledge.Application.Features.Knowledge.Queries.AskKnowledge
                 """));
 
             var prompt = $"""
-                Eres un asistente especializado en normativa de tránsito.
+                Eres un asistente virtual experto y empático. Tu objetivo es responder la duda del usuario de forma clara, directa y con un tono natural y conversacional.
 
-                Responde la pregunta utilizando únicamente la información
-                proporcionada en el contexto.
+                Instrucciones clave:
+                1. Basa tu respuesta exclusivamente en la información provista en la sección "Contexto".
+                2. Sintetiza y redacta la respuesta con tus propias palabras; no te limites a copiar y pegar fragmentos salvo que sea estrictamente necesario (como artículos o citas exactas).
+                3. Si la información del contexto no es suficiente para responder con certeza, sé honesto y menciona con naturalidad que no cuentas con esos datos en tu base de conocimientos, sin especular.
+                4. Responde directamente a lo que se pregunta, omitiendo introducciones robóticas como "Según el contexto provisto...".
 
-                Si el contexto no contiene información suficiente para responder,
-                indícalo claramente y no inventes información.
-
+                ---
                 Contexto:
                 {context}
+                ---
 
-                Pregunta:
+                Pregunta del usuario:
                 {request.Question}
 
                 Respuesta:
