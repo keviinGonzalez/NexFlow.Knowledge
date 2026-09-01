@@ -100,4 +100,5 @@ jobs:
       run: docker compose pull api
 
     - name: Reiniciar contenedor de la API
-      run: docker compose up -d api
+      run: docker compose up -d --no-recreate api
+      # run: docker compose up -d api
