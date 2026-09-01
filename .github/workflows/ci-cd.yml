@@ -76,3 +76,21 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+
+  # -------------------------------------------------------------
+  # JOB 3: Despliegue Continuo (CD) en tu máquina local
+  # -------------------------------------------------------------
+  deploy-to-local:
+    needs: build-and-push-docker
+    runs-on: self-hosted
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Iniciar sesión en GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Actualizar imagen de la API
+      run: docker compose pull api
+
+    - name: Reiniciar contenedor de la API
+      run: docker compose up -d api
