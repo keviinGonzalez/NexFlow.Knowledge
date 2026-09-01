@@ -25,12 +25,12 @@ namespace NexFlow.Knowledge.Api
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                //app.MapOpenApi();
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    //app.MapOpenApi();
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            //}
 
             // Temporary local test bypass: this environment has no HTTPS development certificate.
             // app.UseHttpsRedirection();
