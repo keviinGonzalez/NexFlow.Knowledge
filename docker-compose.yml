@@ -1,5 +1,6 @@
 services:
   api:
+    image: ghcr.io/keviingonzalez/nexflow.knowledge:latest
     build:
       context: .
       dockerfile: NexFlow.Knowledge.Api/Dockerfile
