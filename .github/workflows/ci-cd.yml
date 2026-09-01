@@ -1,0 +1,78 @@
+name: CI/CD Pipeline - NexFlow Knowledge
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  REGISTRY: ghcr.io
+  # Convierte el nombre del repositorio a minúsculas para el registro
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # -------------------------------------------------------------
+  # JOB 1: Compilación y Pruebas Unitarias/Integración
+  # -------------------------------------------------------------
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v4
+
+    - name: Configurar SDK de .NET 10
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restaurar dependencias
+      run: dotnet restore
+
+    - name: Compilar solución (Release)
+      run: dotnet build --no-restore -c Release
+
+    - name: Ejecutar pruebas unitarias (MediatR / CQRS)
+      run: dotnet test --no-build -c Release --verbosity normal
+
+  # -------------------------------------------------------------
+  # JOB 2: Construir y publicar imagen Docker en GHCR
+  # -------------------------------------------------------------
+  build-and-push-docker:
+    needs: build-and-test # Solo se ejecuta si los tests pasaron exitosamente
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v4
+
+    - name: Iniciar sesión en GitHub Container Registry (GHCR)
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extraer metadatos para Docker (Etiquetas y tags)
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=raw,value=latest
+          type=sha,format=short
+
+    - name: Construir y publicar imagen Docker
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: NexFlow.Knowledge.Api/Dockerfile
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
