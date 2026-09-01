@@ -86,9 +86,15 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
+    - name: Checkout del código (para acceder a docker-compose.yml)
+      uses: actions/checkout@v4
+
     - name: Iniciar sesión en GitHub Container Registry
-      run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u keviinGonzalez --password-stdin  
-      # run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GHCR_PAT }}
 
     - name: Actualizar imagen de la API
       run: docker compose pull api
