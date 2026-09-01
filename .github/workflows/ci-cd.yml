@@ -87,7 +87,8 @@ jobs:
 
     steps:
     - name: Iniciar sesión en GitHub Container Registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u keviinGonzalez --password-stdin  
+      # run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
     - name: Actualizar imagen de la API
       run: docker compose pull api
