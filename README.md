@@ -1,157 +1,145 @@
 # NexFlow.Knowledge
 
-## Visión del proyecto
+![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?style=flat&logo=dotnet)
+![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=flat&logo=docker)
+![Ollama](https://img.shields.io/badge/Ollama-Local_AI-000000?style=flat&logo=ollama)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-pgvector-4169E1?style=flat&logo=postgresql)
+![Semantic Kernel](https://img.shields.io/badge/Semantic_Kernel-Microsoft-0078D4?style=flat)
 
-**NexFlow.Knowledge** es un proyecto de aprendizaje y experimentación orientado al desarrollo de soluciones de **Inteligencia Artificial generativa utilizando RAG (Retrieval-Augmented Generation) sobre .NET**.
+## 📌 Visión General y Propósito
 
-El proyecto busca comprender y construir, desde cero, los principales componentes que intervienen en un sistema RAG:
+**NexFlow.Knowledge** es un servicio backend de alto rendimiento diseñado para implementar sistemas **RAG (Retrieval-Augmented Generation)** utilizando **.NET 10** y **C#**. 
 
-- Procesamiento de documentos.
-- Extracción y preparación de texto.
-- Chunking.
-- Embeddings.
-- Bases de datos vectoriales.
-- Búsqueda semántica.
-- Búsqueda textual.
-- Búsqueda híbrida.
-- Ranking y scoring de resultados.
-- Construcción de contexto.
-- Generación de respuestas mediante un LLM.
-- Evaluación de la calidad de recuperación.
+Este proyecto establece un núcleo robusto para la comprensión, procesamiento y recuperación de conocimiento a partir de documentos. Destaca por utilizar **Semantic Kernel** como orquestador cognitivo y **PostgreSQL + pgvector** para la persistencia y búsqueda vectorial de alta eficiencia.
 
-El objetivo no es construir un producto comercial completo, sino desarrollar una solución con una estructura cercana a un proyecto profesional que permita **comprender profundamente cómo funciona un sistema RAG y cómo integrarlo dentro de una aplicación Backend en .NET**.
+**Enfoque Actual:** La arquitectura está diseñada para operar con inferencia y generación de *embeddings* **100% de manera local y soberana mediante Ollama**. Esto permite mantener total privacidad de los datos, evitar costos de API externas y minimizar latencias en entornos controlados (On-Premise).
 
 ---
 
-# Objetivo principal
+## 🏗️ Arquitectura y Roadmap Multiprovedor
 
-Construir una API REST en **.NET 10** capaz de procesar documentos, almacenarlos junto con sus representaciones vectoriales y responder preguntas en lenguaje natural utilizando información recuperada desde dichos documentos.
+La solución sigue principios estrictos de **Clean Architecture**, **DDD** (Domain-Driven Design) y **CQRS** (mediante MediatR). Esta separación de conceptos garantiza que el core de la aplicación sea agnóstico a la infraestructura.
 
-El sistema debe evitar que el modelo genere respuestas basadas únicamente en conocimiento propio cuando la información necesaria no se encuentre en los documentos proporcionados.
+Aunque el enfoque actual es una **infraestructura 100% local con Ollama**, el diseño está preparado para soportar configuraciones *multiprovedor* (como Azure OpenAI u OpenAI estándar). Cambiar de proveedor de IA requiere únicamente modificar la configuración de infraestructura, sin afectar el dominio de la aplicación ni los casos de uso.
 
----
+### Flujo de RAG (Ingesta y Consulta)
 
-# Objetivos de aprendizaje
+```mermaid
+flowchart TD
+    %% Estilos
+    classDef client fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef api fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    classDef sk fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
+    classDef ai fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef db fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
 
-El proyecto busca comprender de forma práctica:
+    %% Nodos de Ingesta
+    Doc[📄 Documento]:::client
+    ApiIngest[⚙️ API: Upload]:::api
+    Chunking[✂️ Text Chunking]:::api
+    SK_Embed1[🧠 Semantic Kernel]:::sk
+    OllamaEmbed1[🤖 Ollama: nomic-embed-text]:::ai
+    DB[🗄️ PostgreSQL + pgvector]:::db
 
-## RAG
+    %% Nodos de Consulta
+    UserQ[❓ Pregunta de Usuario]:::client
+    ApiAsk[⚙️ API: Ask]:::api
+    SK_Embed2[🧠 Semantic Kernel]:::sk
+    OllamaEmbed2[🤖 Ollama: nomic-embed-text]:::ai
+    SK_Gen[🧠 Semantic Kernel]:::sk
+    OllamaChat[🤖 Ollama: qwen2.5:7b]:::ai
+    Resp[✅ Respuesta Final]:::client
 
-- Qué es Retrieval-Augmented Generation.
-- Cuál es el flujo completo de un sistema RAG.
-- Diferencia entre recuperación y generación.
-- Importancia de la calidad de recuperación para la respuesta final.
+    %% Relaciones Ingesta
+    Doc --> ApiIngest
+    ApiIngest --> Chunking
+    Chunking --> SK_Embed1
+    SK_Embed1 <--> OllamaEmbed1
+    SK_Embed1 -->|Vectores de texto| DB
 
-## Embeddings
-
-- Qué es un embedding.
-- Cómo se genera.
-- Cómo representar texto mediante vectores.
-- Cómo comparar similitud entre vectores.
-
-## Recuperación
-
-- Búsqueda semántica.
-- Búsqueda textual.
-- Búsqueda híbrida.
-- Extracción de términos relevantes.
-- Scoring.
-- Ranking.
-- Thresholds.
-- Selección de contexto.
-
-## LLM
-
-- Integración con modelos locales.
-- Construcción de prompts.
-- Uso de contexto recuperado.
-- Restricción de respuestas al contexto disponible.
-- Diferencia entre recuperación de información y generación de lenguaje.
-
-## Ingeniería de software
-
-El proyecto también busca reforzar:
-
-- Clean Architecture.
-- SOLID.
-- Dependency Injection.
-- Separación de responsabilidades.
-- Diseño desacoplado.
-- Abstracciones.
-- Testing.
-- Manejo de errores.
-- Persistencia con Entity Framework Core.
-- Diseño de APIs REST.
+    %% Relaciones Consulta
+    UserQ --> ApiAsk
+    ApiAsk --> SK_Embed2
+    SK_Embed2 <--> OllamaEmbed2
+    SK_Embed2 -->|Búsqueda de Similitud| DB
+    DB -->|Contexto Relevante| SK_Gen
+    SK_Gen <-->|Prompt + Contexto| OllamaChat
+    SK_Gen --> Resp
+```
 
 ---
 
-# Caso de uso
+## 🚀 Cómo Ejecutar el Proyecto (Getting Started)
 
-El sistema permite cargar documentos y posteriormente realizar preguntas utilizando lenguaje natural.
+### Requisitos Previos
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- Docker y Docker Compose
+- [Ollama](https://ollama.ai/) instalado y en ejecución localmente (`ollama serve`).
 
-Los documentos pueden pertenecer a diferentes dominios.
+### Paso 1: Descargar los Modelos en Ollama
+El proyecto por defecto utiliza `nomic-embed-text` para los *embeddings* (por su eficiencia y optimización semántica) y `qwen2.5:7b` para el LLM de chat. Ejecuta los siguientes comandos en tu terminal para instalarlos:
 
-Por ejemplo:
+```bash
+ollama pull nomic-embed-text
+ollama pull qwen2.5:7b
+```
 
-- Normativa.
-- Manuales técnicos.
-- Documentación empresarial.
-- Políticas internas.
-- Procedimientos.
-- Documentación de software.
-- Documentos académicos.
+### Paso 2: Configuración (`appsettings.json`)
+Verifica tu configuración en `NexFlow.Knowledge.Api/appsettings.json`. Dependiendo de tu entorno de ejecución (Docker o .NET CLI local), el `BaseUrl` de Ollama y la base de datos deben apuntar a la dirección correcta:
 
-El sistema no debe depender de un dominio específico.
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=nexflowknowledge;Username=nexflow;Password=NexFlow2026!"
+  },
+  "Ollama": {
+    "BaseUrl": "http://localhost:11434",
+    "ChatModel": "qwen2.5:7b",
+    "EmbeddingModel": "nomic-embed-text"
+  },
+  "Knowledge": {
+    "RetrievalLimit": 10,
+    "ContextLimit": 5,
+    "SimilarityThreshold": 0.65
+  }
+}
+```
+> **Nota para Docker:** Si corres la API en Docker, el `docker-compose.yml` sobrescribe estas variables (ej. `Host=postgres` para DB y `http://ollama:11434` para Ollama).
 
-Por esta razón, **los documentos de tránsito utilizados durante las primeras pruebas son solamente un caso de prueba y no una restricción del proyecto**.
+### Paso 3: Despliegue con Docker
+Para desplegar toda la infraestructura (API, PostgreSQL con pgvector y un contenedor de Ollama), ejecuta desde la raíz del proyecto:
 
----
+```bash
+docker-compose up -d --build
+```
 
-# Principio fundamental
+### Paso 4: Ejecución Local (.NET CLI)
+Si prefieres ejecutar la API directamente desde tu entorno de desarrollo para poder iterar (requiere instancias locales de PostgreSQL y Ollama):
 
-El sistema debe seguir el siguiente principio:
+```bash
+cd NexFlow.Knowledge.Api
+dotnet run
+```
 
-> **La respuesta debe estar fundamentada en la información recuperada desde los documentos.**
+### Paso 5: Pruebas y Health Check
 
-Cuando el contexto recuperado no contenga información suficiente, el sistema deberá indicarlo en lugar de inventar una respuesta.
+Puedes usar los siguientes comandos `curl` para probar el flujo completo:
 
----
+**1. Subir un documento (Ingesta):**
+```bash
+curl -X POST "http://localhost:8080/api/documents/upload" \
+  -H "accept: text/plain" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@/ruta/local/hacia/tu/documento.txt"
+```
 
-# Alcance
-
-El proyecto contempla:
-
-## Procesamiento de documentos
-
-- Carga de documentos.
-- Almacenamiento.
-- Extracción de texto.
-- Normalización.
-- Chunking.
-- Persistencia de fragmentos.
-
-## Recuperación
-
-- Generación de embeddings.
-- Búsqueda vectorial.
-- Búsqueda textual.
-- Búsqueda híbrida.
-- Scoring de candidatos.
-- Ranking de resultados.
-- Selección de fragmentos relevantes.
-
-## Generación
-
-- Construcción de contexto.
-- Construcción de prompts.
-- Integración con LLM.
-- Generación de respuestas.
-- Retorno de referencias utilizadas.
-
-## API
-
-Endpoints principales:
-
-```text
-POST /api/knowledge/search
-POST /api/knowledge/ask
+**2. Hacer una pregunta (RAG Consulta):**
+```bash
+curl -X POST "http://localhost:8080/api/knowledge/ask" \
+  -H "accept: text/plain" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "question": "¿De qué trata el documento que acabo de subir?"
+}'
+```
+*(Puedes acceder a la interfaz de Swagger UI ingresando a `http://localhost:8080/swagger` en tu navegador cuando la API esté corriendo).*
